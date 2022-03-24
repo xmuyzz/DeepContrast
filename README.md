@@ -1,6 +1,8 @@
 # DeepContrast
 
-Keras Implementation of the article "[Deep learning-based detection of intravenous contrast in computed tomography scans](https://arxiv.org/pdf/2110.08424.pdf)", codes and pretrained models.
+Keras implementation for the article "[Deep learning-based detection of intravenous contrast in computed tomography scans](https://arxiv.org/pdf/2110.08424.pdf)", codes and pretrained models. A deep learning-based fully-automatic intravenous contrast detection tool for head-and-neck and chest CT scans. 
+
+<p align="center"><img src="https://github.com/AIM-Harvard/DeepContrast/blob/main/src/utils/Figure1.png" align="middle" width="750" title="CT constrast detection platform" /></p>
 
 ## Implemented models
 
