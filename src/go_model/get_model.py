@@ -14,7 +14,8 @@ from models.TLNet import TLNet
 
 
 
-def get_model(out_dir, run_model, activation, input_shape=(192, 192, 3), freeze_layer=None, transfer=False):
+def get_model(out_dir, run_model, activation, input_shape=(192, 192, 3), 
+              freeze_layer=None, transfer=False):
     
     """
     generate cnn models
@@ -35,7 +36,9 @@ def get_model(out_dir, run_model, activation, input_shape=(192, 192, 3), freeze_
     
 
     train_dir = os.path.join(out_dir, 'train')
-    
+    if not os.path.exists(train_dir):
+        os.mkdir(train_dir)
+
     if run_model == 'cnn':
         my_model = simple_cnn(
             input_shape=input_shape,

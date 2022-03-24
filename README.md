@@ -1,6 +1,18 @@
 # DeepContrast
 
-Fully automatic deep learning system to detect IV Contrast in CT scans.
+Keras Implementation of the article "[Deep learning-based detection of intravenous contrast in computed tomography scans](https://arxiv.org/pdf/2110.08424.pdf)", codes and pretrained models.
+
+## Implemented models
+
+ - Simple CNN
+ - InceptionV3
+ - ResNet101v2
+ - Transfer Learning based on ResNet101v2
+ - EfficientNetB4
+
+## Results
+
+<p align="center"><img src="https://github.com/AIM-Harvard/DeepContrast/blob/main/src/utils/Table.png" align="middle" width="750" title="Results of Head and Neck CT scans" /></p>
 
 ## Repository Structure
 
@@ -63,19 +75,34 @@ The get data step takes care of the following operations:
 The model inference can be run by executing:
 
 ```
-python run_prediction.py HeadNeck
+python run_inference.py --HeadNeck
 ```
 or
 
 ```
-python run_prediction.py Chest
+python run_inference.py --Chest
 ```
 ## Model Development and Test
 
 ### Step 1: Get Data
 
-The get data step takes care of the following operations:
+Download head-and-neck and chest sample CT scans and IV contrast labels from [here](https://drive.google.com/drive/folders/1xXU3GoM4_5CnzPB_8eD3Zjmk6Ye1y7ad?usp=sharing).
 
+Assume the structure of data directories is the following:
+```misc
+~/
+  HeadNeck/
+    raw_image/
+      nrrd files
+    label/
+      csv file
+  Chest/
+    raw_image/
+      nrrd files
+    label/
+      csv file
+```
+The get data step takes care of the following operations:
 1. Data preprocessing for head and neck CT scan including respacing, registration and cropping (`preprocess_data.py`);
 2. Create dataframe to contain data paths, patient IDs and labels on the
     patient level (`get_pat_dataset.py`);
@@ -90,7 +117,7 @@ python run_step1_data.py
 
 The train step takes care of the following operations:
 
-1. Create data generators, including augmentation for training and validation dataset (`data_gen_flow.py`);
+1. Create data generators, including augmentation for training and validation dataset (`data_generator.py`);
 2. Generate desired CNN models, including simple CNN model, EfficientNetB4 model, ResNet101V2 model, Inception3 model, and Transfer Learning model (`get_model.py`);
 3. Train model and save training results and hyperparaters to txt file (`train_model.py`);
 
@@ -105,7 +132,7 @@ python run_step2_train.py
 The test step takes care of the following operations:
 
 1. Evaluate model performance on internal validation dataset (head and neck CT) and external test dataset (head and neck CT) (`evaluate_model.py`);
-2. Generate statistcal results (accuracy, ROC-AUC, sensitivity, specificity, F1-score) and plots (confusion matrix, ROC curve, precision-recall curve) ('get_stats_plots.py);
+2. Generate statistcal results (accuracy, ROC-AUC, sensitivity, specificity, F1-score) and plots (confusion matrix, ROC curve, precision-recall curve) (`get_stats_plots.py`);
 
 The test step can be run by executing:
 
@@ -113,23 +140,38 @@ The test step can be run by executing:
 python run_step3_test.py
 ```
 
-### Step 4: External Validation
+### Step 4: Finetune Model for Chest CT Data
 
-1. Preprocess chest CT data and prepare data for the CNN model input (`exval_dataset.py`);
-2. Fine tune previsouly trained model with chest CT data (`finetune_model.py`);
+1. Preprocess chest CT data and prepare data for the CNN model input (`tune_dataset.py`);
+2. Fine tune previsouly trained model with chest CT data (`tune_model.py`);
 3. Evaluate fine-tuned model with internal validation dataset (chest CT) and external test dataset (chest CT) (`evaluate_model.py`);
-4. Generate statistcal results (accuracy, ROC-AUC, sensitivity, specificity, F1-score) and plots (confusion matrix, ROC curve, precision-recall curve) ('get_stats_plots.py);
+4. Generate statistcal results (accuracy, ROC-AUC, sensitivity, specificity, F1-score) and plots (confusion matrix, ROC curve, precision-recall curve) (`get_stats_plots.py`);
 
 The external validation step can be run by executing:
 
 ```
-python run_step4_exval.py
+python run_step4_tune.py
+```
+
+## Citation
+
+Please cite the following article if you use this code or pre-trained models:
+
+```bibtex
+@misc{https://doi.org/10.48550/arxiv.2110.08424,
+  doi = {10.48550/ARXIV.2110.08424},
+  url = {https://arxiv.org/abs/2110.08424}, 
+  author = {Ye Z, Qian JM, Hosny A, Zeleznik R, Plana D, Likitlersuang J, Zhang Z, Mak RH, Aerts HJWL, and Kann BH},
+  title = {Deep learning-based detection of intravenous contrast in computed tomography scans},
+  publisher = {arXiv},
+  year = {2021}, 
+  copyright = {Creative Commons Attribution Non Commercial No Derivatives 4.0 International}
+}
 ```
 
 ## Acknowledgements
 
-Code development: ZY
-Code testing, refactoring and documentation: ZY
+Code development, testing, refactoring and documentation: ZY, BHK.
 
 ## Disclaimer
 

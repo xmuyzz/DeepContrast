@@ -1,4 +1,3 @@
-
 import os
 import numpy as np
 import pandas as pd
@@ -12,12 +11,12 @@ from tensorflow.keras.models import Model
 from go_model.callbacks import callbacks
 from utils.plot_train_curve import plot_train_curve
 from tensorflow.keras.optimizers import Adam
-from utils.write_txt import write_txt
+from statistics.write_txt import write_txt
 
 
 
-def train_model(out_dir, model, run_model, train_gen, val_gen, x_val, y_val, batch_size, epoch, 
-                opt, loss_func, lr): 
+def train_model(out_dir, log_dir, model_dir, model, run_model, train_gen, 
+                val_gen, x_val, y_val, batch_size, epoch, optimizer, loss_function, lr): 
 
     """
     train model
@@ -41,18 +40,11 @@ def train_model(out_dir, model, run_model, train_gen, val_gen, x_val, y_val, bat
     
     """
 
-    model_dir = os.path.join(out_dir, 'model')
-    log_dir = os.path.join(out_dir, 'log')
-    if not os.path.exists(model_dir):
-        os.mkdir(model_dir)
-    if not os.path.exists(log_dir):
-        os.mkdir(log_dir)
-
     ## compile model
     print('complie model')
     model.compile(
-        optimizer=opt,
-        loss=loss_func,
+        optimizer=optimizer,
+        loss=loss_function,
         metrics=['acc']
         )
 	
@@ -85,14 +77,14 @@ def train_model(out_dir, model, run_model, train_gen, val_gen, x_val, y_val, bat
     print('val acc:', acc)
 
     ## save final model
-    saved_model = str(run_model) + '_' + str(strftime('%Y_%m_%d_%H_%M_%S', localtime()))
+    saved_model = str(run_model)
     model.save(os.path.join(model_dir, saved_model))
     print(saved_model)
     
     ## save validation results to txt file 
     write_txt(
         run_type='train',
-        out_dir=out_dir,
+        proj_dir=proj_dir,
         loss=1,
         acc=1,
         cms=None,

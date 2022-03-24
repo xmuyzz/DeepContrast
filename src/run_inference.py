@@ -1,4 +1,3 @@
-
 import os
 import numpy as np
 import pandas as pd
@@ -12,13 +11,12 @@ from prediction.data_prepro import data_prepro
 from prediction.model_pred import model_pred
 
 
-
-
 if __name__ == '__main__':
-    
+
+
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        'body_part',
+        '--body_part',
         type = str,
         choices = ['HeadNeck', 'Chest'],
         help = 'Specify the body part ("HeadNeck" or "Chest") to run inference.'
