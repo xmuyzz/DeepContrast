@@ -160,14 +160,11 @@ python run_step4_tune.py
 Please cite the following article if you use this code or pre-trained models:
 
 ```bibtex
-@misc{https://doi.org/10.48550/arxiv.2110.08424,
-  doi = {10.48550/ARXIV.2110.08424},
-  url = {https://arxiv.org/abs/2110.08424}, 
+@article{ye2021DeepContrast,
+  title = {Deep learning-based detection of intravenous contrast in computed tomography scans}, 
   author = {Ye Z, Qian JM, Hosny A, Zeleznik R, Plana D, Likitlersuang J, Zhang Z, Mak RH, Aerts HJWL, and Kann BH},
-  title = {Deep learning-based detection of intravenous contrast in computed tomography scans},
-  publisher = {arXiv},
+  journal = {arXiv preprint arXiv:2110.08424},
   year = {2021}, 
-  copyright = {Creative Commons Attribution Non Commercial No Derivatives 4.0 International}
 }
 ```
 
